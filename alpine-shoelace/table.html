@@ -32,7 +32,7 @@
             <div x-show="loading" class="text-center text-gray-500">Loading...</div>
 
             <!-- Table -->
-            <div class="overflow-x-auto" x-show="!loading">
+            <!-- <div class="overflow-x-auto" x-show="!loading">
                 <table class="w-full">
                     <thead>
                         <tr>
@@ -53,6 +53,31 @@
                         </template>
                     </tbody>
                 </table>
+            </div> -->
+
+            <div x-data="tableComponent" class="overflow-x-auto">
+                <sl-input type="search" placeholder="Search users..." x-model="searchQuery"></sl-input>
+
+                <table class="w-full">
+                    <tr>
+                        <th @click="sort('firstName')">First Name</th>
+                        <th @click="sort('lastName')">Last Name</th>
+                        <th @click="sort('email')">Email</th>
+                    </tr>
+                    <template x-for="user in paginatedUsers" :key="user.id">
+                        <tr>
+                            <td x-text="user.firstName"></td>
+                            <td x-text="user.lastName"></td>
+                            <td x-text="user.email"></td>
+                        </tr>
+                    </template>
+                </table>
+
+                <div class="pagination-controls">
+                    <sl-button @click="prevPage" :disabled="currentPage === 1">Prev</sl-button>
+                    <span x-text="currentPage"></span> / <span x-text="totalPages"></span>
+                    <sl-button @click="nextPage" :disabled="currentPage === totalPages">Next</sl-button>
+                </div>
             </div>
 
             <!-- Refresh Button -->

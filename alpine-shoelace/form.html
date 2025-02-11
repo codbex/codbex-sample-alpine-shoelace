@@ -9,11 +9,14 @@
         <!-- Shoelace CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/themes/light.css">
 
+        <!-- Import app.js as a separate ES module -->
+        <script defer src="./form.js"></script>
+
         <!-- Shoelace JS -->
         <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/shoelace.js"></script>
 
-        <!-- Import app.js as a separate ES module -->
-        <script type="module" src="./form.js"></script>
+        <!-- Import Shoelace Alpine model plugin before Alpine.js -->
+        <script type="module" src="/plugins/sl.js"></script>
 
         <!-- Alpine.js (Loaded Last) -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -38,7 +41,7 @@
             <sl-input type="date" label="Date of Birth" x-model="formData.dateOfBirth"></sl-input>
 
             <!-- Role -->
-            <sl-select label="Role" x-model="formData.role">
+            <sl-select label="Role" x-model="formData.role" x-sl>
                 <sl-option value="user">User</sl-option>
                 <sl-option value="admin">Admin</sl-option>
             </sl-select>
@@ -48,10 +51,10 @@
             <sl-range min="0" max="100" step="1" x-model="formData.rating"></sl-range>
 
             <!-- Checkbox (Subscribe) -->
-            <sl-checkbox x-model="formData.subscribe">Subscribe to newsletter</sl-checkbox>
+            <sl-checkbox x-model="formData.subscribe" x-sl>Subscribe to newsletter</sl-checkbox>
 
             <!-- Radio Group (Gender) -->
-            <sl-radio-group label="Gender" x-model="formData.gender">
+            <sl-radio-group label="Gender" x-model="formData.gender" x-sl>
                 <sl-radio value="male">Male</sl-radio>
                 <sl-radio value="female">Female</sl-radio>
                 <sl-radio value="other">Other</sl-radio>
@@ -66,7 +69,6 @@
                 <p>Email: <span x-text="formData.email"></span></p>
                 <p>Role: <span x-text="formData.role"></span></p>
                 <p>Date of Birth: <span x-text="formData.dateOfBirth"></span></p>
-                <p>Role: <span x-text="formData.role"></span></p>
                 <p>Rating: <span x-text="formData.rating"></span></p>
                 <p>Subscribed: <span x-text="formData.subscribe ? 'Yes' : 'No'"></span></p>
                 <p>Gender: <span x-text="formData.gender"></span></p>

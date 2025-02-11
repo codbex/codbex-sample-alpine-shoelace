@@ -25,37 +25,13 @@
 
     <body class="p-6 bg-gray-100 flex items-center justify-center min-h-screen">
 
-        <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg" x-data="userTable()">
+        <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg" x-data="tableComponent">
             <h2 class="text-lg font-bold mb-4">User List</h2>
 
             <!-- Loading Indicator -->
             <div x-show="loading" class="text-center text-gray-500">Loading...</div>
 
-            <!-- Table -->
-            <!-- <div class="overflow-x-auto" x-show="!loading">
-                <table class="w-full">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Company</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <template x-for="user in users" :key="user.id">
-                            <tr>
-                                <td x-text="user.id"></td>
-                                <td x-text="user.firstName + ' ' + user.lastName"></td>
-                                <td x-text="user.email"></td>
-                                <td x-text="user.company.name"></td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
-            </div> -->
-
-            <div x-data="tableComponent" class="overflow-x-auto">
+            <div class="overflow-x-auto" x-show="!loading">
                 <sl-input type="search" placeholder="Search users..." x-model="searchQuery"></sl-input>
 
                 <table class="w-full">

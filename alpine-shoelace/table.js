@@ -1,16 +1,26 @@
 document.addEventListener("alpine:init", () => {
     Alpine.data("tableComponent", () => ({
         users: [],
+        loading: true,
         searchQuery: "",
         sortColumn: "firstName",
         sortOrder: "asc",
         currentPage: 1,
         pageSize: 5,
 
-        async init() {
-            const response = await fetch("https://dummyjson.com/users");
-            const data = await response.json();
-            this.users = data.users;
+        async fetchUsers() {
+            this.loading = true;
+            try {
+                let response = await fetch('https://dummyjson.com/users');
+                let data = await response.json();
+                this.users = data.users;
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+            this.loading = false;
+        },
+        init() {
+            this.fetchUsers();
         },
 
         get filteredUsers() {

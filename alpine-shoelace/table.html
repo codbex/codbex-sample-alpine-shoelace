@@ -1,65 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table Sample</title>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Table Sample</title>
+    <!-- Shoelace CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/themes/light.css" />
 
-        <!-- Shoelace CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/themes/light.css">
+    <!-- Shoelace JS -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/shoelace.js"></script>
 
-        <!-- Shoelace JS -->
-        <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/shoelace.js"></script>
+    <!-- Import app.js as a separate ES module -->
+    <script type="text/javascript" src="./table.js"></script>
 
+    <!-- Alpine.js (Loaded Last) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-        <!-- Import app.js as a separate ES module -->
-        <script type="module" src="./table.js"></script>
+    <!-- Tailwind -->
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+  </head>
 
-        <!-- Alpine.js (Loaded Last) -->
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <body class="p-6 bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg" x-data="tableComponent">
+      <h2 class="text-lg font-bold mb-4">User List</h2>
 
-        <!-- Tailwind -->
-        <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-    </head>
+      <!-- Loading Indicator -->
+      <div x-show="loading" class="text-center text-gray-500">Loading...</div>
 
-    <body class="p-6 bg-gray-100 flex items-center justify-center min-h-screen">
+      <div class="overflow-x-auto" x-show="!loading">
+        <sl-input type="search" placeholder="Search users..." x-model="searchQuery"></sl-input>
 
-        <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg" x-data="tableComponent">
-            <h2 class="text-lg font-bold mb-4">User List</h2>
+        <table class="w-full">
+          <tr>
+            <th @click="sort('firstName')">First Name</th>
+            <th @click="sort('lastName')">Last Name</th>
+            <th @click="sort('email')">Email</th>
+          </tr>
+          <template x-for="user in paginatedUsers" :key="user.id">
+            <tr>
+              <td x-text="user.firstName"></td>
+              <td x-text="user.lastName"></td>
+              <td x-text="user.email"></td>
+            </tr>
+          </template>
+        </table>
 
-            <!-- Loading Indicator -->
-            <div x-show="loading" class="text-center text-gray-500">Loading...</div>
-
-            <div class="overflow-x-auto" x-show="!loading">
-                <sl-input type="search" placeholder="Search users..." x-model="searchQuery"></sl-input>
-
-                <table class="w-full">
-                    <tr>
-                        <th @click="sort('firstName')">First Name</th>
-                        <th @click="sort('lastName')">Last Name</th>
-                        <th @click="sort('email')">Email</th>
-                    </tr>
-                    <template x-for="user in paginatedUsers" :key="user.id">
-                        <tr>
-                            <td x-text="user.firstName"></td>
-                            <td x-text="user.lastName"></td>
-                            <td x-text="user.email"></td>
-                        </tr>
-                    </template>
-                </table>
-
-                <div class="pagination-controls">
-                    <sl-button @click="prevPage" :disabled="currentPage === 1">Prev</sl-button>
-                    <span x-text="currentPage"></span> / <span x-text="totalPages"></span>
-                    <sl-button @click="nextPage" :disabled="currentPage === totalPages">Next</sl-button>
-                </div>
-            </div>
-
-            <!-- Refresh Button -->
-            <sl-button variant="primary" x-on:click="fetchUsers">Refresh Data</sl-button>
+        <div class="pagination-controls">
+          <sl-button @click="prevPage" :disabled="currentPage === 1">Prev</sl-button>
+          <span x-text="currentPage"></span> / <span x-text="totalPages"></span>
+          <sl-button @click="nextPage" :disabled="currentPage === totalPages">Next</sl-button>
         </div>
+      </div>
 
-    </body>
-
+      <!-- Refresh Button -->
+      <sl-button variant="primary" x-on:click="fetchUsers">Refresh Data</sl-button>
+    </div>
+  </body>
 </html>

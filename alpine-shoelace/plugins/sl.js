@@ -22,7 +22,7 @@ document.addEventListener('alpine:init', () => {
     el.addEventListener('sl-change', handler);
 
     cleanup(() => {
-      window.removeEventListener('sl-change', handler);
+      el.removeEventListener('sl-change', handler);
     });
   });
 });
